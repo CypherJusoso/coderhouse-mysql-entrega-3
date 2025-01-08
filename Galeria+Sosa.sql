@@ -86,6 +86,7 @@ like_dislike_id INT AUTO_INCREMENT,
 is_like BOOL,
 image_id INT,
 user_id INT,
+action_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 
 PRIMARY KEY(like_dislike_id),
 CONSTRAINT fk_image_like_dislike
@@ -189,7 +190,15 @@ CREATE TABLE Album_images (
     FOREIGN KEY (image_id) REFERENCES Image(image_id)
 );
 
-
+-- Tabla de hechos
+CREATE TABLE User_activity (
+    activity_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    activity_type VARCHAR(50), -- 'like', 'dislike', 'comment', 'report'
+    target_id INT, -- image_id, comment_id, or user_id (depende de la actividad)
+    activity_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+);
 
 -- Vista para ver imagenes con su información y el nombre del usuario
 
